@@ -1,0 +1,25 @@
+.container {
+    margin: 20px 0;
+}
+.header input {
+    display: inline-block;
+    width: 80%;
+    line-height: 40px;
+    vertical-align: bottom;
+}
+.header button {
+    display: inline-block;
+}
+
+.list-group {
+    margin: 10px 0;
+}
+.list-group-item {
+    padding: 10px;
+}
+.list-group-item-heading {
+    color: #aaa;
+    font-size: 16px;
+}
+
+/*# sourceMappingURL=/counter.14318c55.css.map */
