@@ -118,26 +118,70 @@ parcelRequire = (function (modules, cache, entry, globalName) {
 
   return newRequire;
 })({"throttle/js/index.js":[function(require,module,exports) {
-document.addEventListener('scroll', throttle(500, 1000, function () {
-  console.log('what?');
-}));
+// document.addEventListener('scroll', throttle(500, 1000, function() {
+//     console.log('what?')
+// }))
+// function throttle(delay, interval, fn) {
+//     var startTime = new Date().getTime()
+//     var timer = null
+//     return function () {
+//         var nowTime = new Date().getTime()
+//         clearTimeout(timer)
+//         console.log(nowTime - startTime, interval)
+//         if (nowTime - startTime >= interval) {
+//             // fn.applay(this, arguments)
+//             startTime = nowTime
+//         } else {
+//             timer = setTimeout(fn, delay);
+//         }
+//     }
+// }
 
-function throttle(delay, interval, fn) {
-  var startTime = new Date().getTime();
-  var timer = null;
-  return function () {
-    var nowTime = new Date().getTime();
-    clearTimeout(timer);
-    console.log(nowTime - startTime, interval);
+/**
+ * 节流
+ * @param {Function} fn 调用方法
+ * @param {Number} time 时间间隔
+ * @param {Object} opt 配置参数
+ */
+var throttle = function throttle(fn) {
+  var time = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 18;
+  var opt = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {
+    leading: true,
+    trailing: false,
+    context: null
+  };
+  var pre = new Date(0).getTime();
+  var timer;
 
-    if (nowTime - startTime >= interval) {
-      // fn.applay(this, arguments)
-      startTime = nowTime;
-    } else {
-      timer = setTimeout(fn, delay);
+  var _throttle = function _throttle() {
+    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+
+    var now = new Date().getTime();
+
+    if (!opt.leading) {
+      if (timer) return;
+      timer = setTimeout(function () {
+        timer = null;
+        fn.apply(opt.context, args);
+      }, time);
+    } else if (now - pre > time) {
+      fn.apply(opt.context, args);
+      pre = now;
+    } else if (opt.trailing) {
+      clearTimeout(timer);
+      timer = setTimeout(function () {
+        fn.apply(opt.context, args);
+      }, time);
     }
   };
-}
+
+  _throttle.cancel = function () {
+    pre = 0;
+    clearTimeout(timer);
+  };
+};
 },{}],"../node_modules/_parcel-bundler@1.12.3@parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
@@ -166,7 +210,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "59417" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "52832" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
