@@ -1,42 +1,30 @@
-// ------------------- 策略模式 -------------------
+// 策略模式
 
-var performanceA = function () { }
-
-performanceA.prototype.calculate = function (salary) {
-    return salary * 4
-}
-var performanceB = function () { }
-
-performanceB.prototype.calculate = function (salary) {
-    return salary * 3
-}
-
-var performanceC = function () { }
-
-performanceC.prototype.calculate = function (salary) {
-    return salary * 2
-}
-
-class Bouns {
-    constructor() {
-        this.salary = null
-        this.levelObj = null
+class CalculateMoney {
+    constructor(type, money) {
+        this.money = money
+        return this.switchStrategy(type, money)
     }
 
-    setSalary(salary) {
-        this.salary = salary
-    }
-
-    setlevelObj(levelObj) {
-        this.levelObj = levelObj
-    }
-
-    getBouns() {
-        return this.levelObj.calculate(this.salary)
+    /**
+     * 
+     * @param {string} type 类型
+     * @param {number} money 金额 
+     */
+    switchStrategy(type, money) {
+        let tp = type.toLocaleLowerCase()
+        if (tp === 'a') {
+            return this.money = money * 100
+        } else if (tp === 'b') {
+            return this.money = money * 200
+        } else if (tp === 'c') {
+            return this.money = money * 300
+        } else {
+            return this.money = money * 400
+        }
     }
 }
 
-var bouns = new Bouns()
-bouns.setSalary(10000)
-bouns.setlevelObj(new performanceA())
-console.log(bouns.getBouns())
+
+let calculateMoney = new CalculateMoney('', 10000)
+// console.log(calculateMoney);
