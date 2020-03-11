@@ -163,13 +163,11 @@ Array.prototype.forSome = forSome
 let forSomeArr = [2,3,5,6,3,33].forSome(num => num === 33)
 // console.log(forSomeArr)
 
-
 /**
- * 使用 reduce 实现数组的 flat
+ * 使用 reduce 4 flat
  * @param {Number} depth 扁平化深度
  */
 const reduceFlat = function (depth = 1) {
-    console.log(this)
     let arr = Array.prototype.slice.call(this)
 
     if (depth === 0) return arr
@@ -186,4 +184,16 @@ const reduceFlat = function (depth = 1) {
 Array.prototype.reduceFlat = reduceFlat
 
 let reduceFlatArr = [1,2,3, [2,3,4, [5,6,7]]].reduceFlat()
-console.log(reduceFlatArr)
+// console.log(reduceFlatArr)
+
+// 扁平化
+let flat = function(arr) {
+    return Array.from(new Set(arr.flat(Infinity))).sort((a,b)=>{ return a-b})
+}
+// console.log(flat([1,2,3, [3,4,5,6,[2,3,4,5]]]))
+
+// 扁平化方案2
+let flat2 = function(arr) {
+    return [...new Set([].concat(...arr.map(item => (Array.isArray(item) ? flat2(item) : [item]))))].sort((a, b) => a - b)
+}
+// console.log(flat2([1,2,3, [3,4,5,6,[2,3,4,5,9, 87]]]))

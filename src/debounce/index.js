@@ -4,7 +4,7 @@ const debounce = (fn, time = 18, opt = {
 }) => {
     let timer
 
-    let _debounce = (...args) {
+    let _debounce = (...args) => {
         if (timer) {
             clearTimeout(timer)
         }
